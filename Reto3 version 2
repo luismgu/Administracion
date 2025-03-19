@@ -1,0 +1,136 @@
+# Definición de variables de tipo texto
+categorias = ["Hogar", "Vehículos", "Institucional"]
+subcategorias_hogar = ["Cocina", "Baños", "Zonas Comunes"]
+modulos = ["Educación", "Información", "Evaluación", "Pedidos"]
+
+# Definición de variables numéricas
+porcentaje_aprobacion = 75  # Porcentaje mínimo para aprobar la evaluación
+
+# Definición de enlaces de videos educativos
+videos_educativos = {
+    "Uso del Cloro en el Hogar e Institución": "https://youtu.be/r6jenh6dqI8?si=Qs3YFWKrlGNgV4lh"
+}
+
+# Preguntas para verificar aprendizaje
+preguntas_verificacion = [
+    ("Cada tableta de Cloro Verde con Detergente debe disolverse en más de un litro de agua.", False),
+    ("Se recomienda utilizar agua caliente para disolver la pastilla más rápidamente.", False),
+    ("Es necesario agitar vigorosamente el atomizador inmediatamente después de agregar la pastilla.", False),
+    ("Debo esperar al menos 30 minutos después de agregar la pastilla al agua antes de usar la solución.", True),
+    ("La solución de Cloro Verde con Detergente es segura para usar en cualquier superficie de la casa, incluyendo textiles.", True),
+    ("El Cloro Verde con Detergente en pastillas requiere enjuague con agua después de su aplicación.", False),
+    ("Puedo usar la solución de Cloro Verde con Detergente para desinfectar superficies de vehículos.", False),
+    ("El Cloro Verde con Detergente en pastillas es un producto seguro para usar en presencia de niños y mascotas.", False),
+    ("Una vez disuelta la pastilla, la solución mantiene su efectividad desinfectante por tiempo indefinido.", False)
+]
+
+# Función del módulo educativo
+
+def modulo_educativo():
+    """Muestra los videos educativos y verifica el aprendizaje."""
+    print("\n--- MÓDULO EDUCATIVO ---\n")
+    mostrar_videos()
+    respuestas = realizar_encuesta()
+    resultado = verificar_aprendizaje(respuestas)
+    print(resultado)
+    return resultado
+
+# Función para mostrar videos educativos
+
+def mostrar_videos():
+    """Muestra los videos educativos disponibles."""
+    print("\nVideos Educativos Disponibles:")
+    for titulo, enlace in videos_educativos.items():
+        print(f"{titulo}: {enlace}")
+
+# Función para realizar encuesta de verificación de aprendizaje
+
+def realizar_encuesta():
+    """Realiza la encuesta de verificación de aprendizaje."""
+    respuestas = []
+    for pregunta, respuesta_correcta in preguntas_verificacion:
+        respuesta_usuario = input(f"{pregunta} (si/no): ").strip().lower()
+        respuestas.append((respuesta_usuario == 'si') == respuesta_correcta)
+    return respuestas
+
+# Función para verificar aprendizaje
+
+def verificar_aprendizaje(respuestas):
+    """Evalúa las respuestas de una encuesta y devuelve un resumen."""
+    total_preguntas = len(respuestas)
+    respuestas_correctas = sum(1 for r in respuestas if r)
+    porcentaje = (respuestas_correctas / total_preguntas) * 100
+    return f"Porcentaje de respuestas correctas: {porcentaje:.2f}%"
+
+# Función para controlar evaluaciones periódicas
+
+def evaluacion_personal(respuestas):
+    """Valida si el personal de aseo aprobó la evaluación."""
+    resultado = verificar_aprendizaje(respuestas)
+    if float(resultado.split(": ")[1][:-1]) >= porcentaje_aprobacion:
+        return "Evaluación aprobada"
+    else:
+        return "Evaluación reprobada"
+
+# Función para control periódico de empresas
+
+def control_periodico_empresas(empresas):
+    """Realiza un control periódico de empresas y reporta su estado."""
+    reporte = {}
+    for empresa, estado in empresas.items():
+        reporte[empresa] = "Cumple requisitos" if estado else "Requiere revisión"
+    return reporte
+
+# Función para control de pedidos en base al inventario
+
+def control_pedidos(inventario, pedidos):
+    """Verifica si los pedidos pueden ser procesados en base al inventario disponible."""
+    resultado = {}
+    for producto, cantidad in pedidos.items():
+        if producto in inventario and inventario[producto] >= cantidad:
+            resultado[producto] = "Pedido aprobado"
+            inventario[producto] -= cantidad  # Reducir stock
+        else:
+            resultado[producto] = "Stock insuficiente"
+    return resultado
+
+# Función para obtener fichas técnicas
+
+def obtener_ficha_tecnica(producto):
+    """Devuelve la ficha técnica de un producto."""
+    fichas_tecnicas = {
+        "Producto1": "Ficha técnica de Producto1",
+        "Producto2": "Ficha técnica de Producto2"
+    }
+    return fichas_tecnicas.get(producto, "Ficha no disponible")
+
+# Función de preguntas frecuentes
+
+def preguntas_frecuentes():
+    """Devuelve una lista de preguntas frecuentes y sus respuestas."""
+    faqs = {
+        "¿Cómo puedo actualizar mis datos?": "Ingrese al portal y vaya a la sección de configuración.",
+        "¿Cuál es el horario de atención?": "De lunes a viernes de 8 AM a 6 PM.",
+        "¿Cómo contacto soporte?": "Envíe un correo a contacto@innovaquimica.com.co."
+    }
+    return faqs
+
+# Ciclo for para recorrer módulos disponibles
+for modulo in modulos:
+    print(f"Módulo disponible: {modulo}")
+
+# Ejemplo de uso
+def ejecutar_sistema():
+    print("\nBienvenido al sistema de gestión de empresas")
+    modulo_educativo()
+    
+    empresas = {"Empresa A": True, "Empresa B": False}
+    print(control_periodico_empresas(empresas))
+    
+    inventario = {"Producto1": 10, "Producto2": 5}
+    pedidos = {"Producto1": 3, "Producto2": 6}
+    print(control_pedidos(inventario, pedidos))
+    
+    print(preguntas_frecuentes())
+
+ejecutar_sistema()
